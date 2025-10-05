@@ -1,0 +1,89 @@
+import SwiftUI
+
+// MARK: - Hourly Forecast View
+struct HourlyForecastView: View {
+    let hourlyData: [HourlyWeather]
+    let textColor: Color
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Cloudy conditions expected around 8AM. Wind gusts are up to 15 mph.")
+                .font(.callout)
+                .foregroundColor(textColor.opacity(0.8))
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 12)
+                .padding(.horizontal, 12)
+            
+            Divider()
+                .background(textColor.opacity(0.5))
+                .frame(height: 1)
+                .padding(.horizontal, 12)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(Array(hourlyData.enumerated()), id: \.offset) { index, hour in
+                        HourlyItemView(hourly: hour, textColor: textColor)
+                    }
+                }
+                .padding(.leading, 12)
+                .padding(.bottom, 16)
+            }
+        }
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(textColor.opacity(0.1))
+        )
+        .padding(.horizontal, 20)
+    }
+}
+
+// MARK: - Hourly Item View
+struct HourlyItemView: View {
+    let hourly: HourlyWeather
+    let textColor: Color
+    
+    var body: some View {
+        VStack {
+            Text(hourly.time)
+                .font(.caption)
+                .foregroundColor(textColor)
+                .fontWeight(.medium)
+            
+            Spacer(minLength: 4)
+            
+            if let precipChance = hourly.precipitationChance {
+                VStack(spacing: 2) {
+                    Image(systemName: hourly.condition.systemImage)
+                        .font(.title2)
+                        .foregroundColor(textColor)
+                    
+                    Text("\(precipChance)%")
+                        .font(.caption2)
+                        .foregroundColor(.cyan)
+                        .fontWeight(.medium)
+                }
+            } else {
+                Image(systemName: hourly.condition.systemImage)
+                    .font(.title2)
+                    .foregroundColor(textColor)
+            }
+            
+            Spacer(minLength: 4)
+            
+            Text("\(hourly.temperature)°")
+                .font(.title3)
+                .fontWeight(.medium)
+                .foregroundColor(textColor)
+        }
+        .frame(width: 44)
+    }
+}
+
+#Preview {
+    HourlyForecastView(
+        hourlyData: WeatherData.sampleData.hourlyForecast,
+        textColor: .white
+    )
+    .background(Color.blue)
+} 
