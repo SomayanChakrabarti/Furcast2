@@ -3,7 +3,7 @@ import CoreLocation
 
 // MARK: - City Page View (Swipeable Container)
 struct CityPageView: View {
-    @State private var cities = City.sampleCities
+    @State private var cities: [City] = []
     @State private var selectedCityIndex = 0
     @ObservedObject private var locationManager = LocationManager.shared
     
@@ -33,6 +33,7 @@ struct CityPageView: View {
             .padding(.bottom, 0)
         }
         .onAppear {
+            initializeCitiesWithRandomGIFs()
             locationManager.requestPermission()
             preloadWeatherForAllCities()
         }
@@ -40,6 +41,19 @@ struct CityPageView: View {
             if let location = newLocation {
                 updateCurrentLocationCity(with: location)
             }
+        }
+    }
+
+    private func initializeCitiesWithRandomGIFs() {
+        // Assign random GIFs from 1-27 to each city
+        let availableGIFs = Array(1...27).shuffled()
+        cities = City.sampleCities.enumerated().map { index, city in
+            City(
+                name: city.name,
+                latitude: city.latitude,
+                longitude: city.longitude,
+                gifName: "\(availableGIFs[index])"
+            )
         }
     }
 

@@ -43,7 +43,7 @@ struct WeatherView: View {
                                 .contentShape(Rectangle())
                         }
 
-                        HourlyForecastView(hourlyData: weather.hourlyForecast, textColor: textColor)
+                        HourlyForecastView(hourlyData: weather.hourlyForecast, textColor: textColor, description: weather.description)
 
                         DailyForecastView(dailyData: weather.dailyForecast, textColor: textColor)
                             .padding(.bottom, 30)

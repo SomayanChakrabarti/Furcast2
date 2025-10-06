@@ -4,10 +4,11 @@ import SwiftUI
 struct HourlyForecastView: View {
     let hourlyData: [HourlyWeather]
     let textColor: Color
-    
+    let description: String
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Cloudy conditions expected around 8AM. Wind gusts are up to 15 mph.")
+            Text(description)
                 .font(.callout)
                 .foregroundColor(textColor.opacity(0.8))
                 .multilineTextAlignment(.leading)
@@ -84,7 +85,8 @@ struct HourlyItemView: View {
 #Preview {
     HourlyForecastView(
         hourlyData: WeatherData.sampleData.hourlyForecast,
-        textColor: .white
+        textColor: .white,
+        description: WeatherData.sampleData.description
     )
     .background(Color.blue)
 } 
