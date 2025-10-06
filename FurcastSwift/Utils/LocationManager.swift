@@ -11,6 +11,7 @@ class LocationManager: NSObject, ObservableObject {
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
 
     private let locationManager = CLLocationManager()
+    private let defaults = UserDefaults(suiteName: "group.MayansParty.FurcastSwift")
 
     private override init() {
         super.init()
@@ -45,6 +46,12 @@ extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         currentLocation = location
+
+        // Save to shared defaults for widget access
+        defaults?.set(location.coordinate.latitude, forKey: "currentLocationLat")
+        defaults?.set(location.coordinate.longitude, forKey: "currentLocationLon")
+        defaults?.synchronize()
+
         locationManager.stopUpdatingLocation()
     }
 

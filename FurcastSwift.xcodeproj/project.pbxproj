@@ -6,11 +6,63 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		213CA4F92E937BA90040538B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CA4F82E937BA90040538B /* WidgetKit.framework */; };
+		213CA4FB2E937BA90040538B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CA4FA2E937BA90040538B /* SwiftUI.framework */; };
+		213CA50C2E937BAB0040538B /* FurcastWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 213CA4F62E937BA90040538B /* FurcastWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		213CA50A2E937BAB0040538B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 21E1C7D82DF92B8D00DFB6D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 213CA4F52E937BA90040538B;
+			remoteInfo = FurcastWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		213CA5112E937BAB0040538B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				213CA50C2E937BAB0040538B /* FurcastWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		213CA4F62E937BA90040538B /* FurcastWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FurcastWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		213CA4F82E937BA90040538B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		213CA4FA2E937BA90040538B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		213CA5122E937BED0040538B /* FurcastWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FurcastWidgetExtension.entitlements; sourceTree = "<group>"; };
 		21E1C7E02DF92B8D00DFB6D7 /* FurcastSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FurcastSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		213CA50D2E937BAB0040538B /* Exceptions for "FurcastWidget" folder in "FurcastWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 213CA4F52E937BA90040538B /* FurcastWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		213CA4FC2E937BA90040538B /* FurcastWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				213CA50D2E937BAB0040538B /* Exceptions for "FurcastWidget" folder in "FurcastWidgetExtension" target */,
+			);
+			path = FurcastWidget;
+			sourceTree = "<group>";
+		};
 		21E1C7E22DF92B8D00DFB6D7 /* FurcastSwift */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FurcastSwift;
@@ -19,6 +71,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		213CA4F32E937BA90040538B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				213CA4FB2E937BA90040538B /* SwiftUI.framework in Frameworks */,
+				213CA4F92E937BA90040538B /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		21E1C7DD2DF92B8D00DFB6D7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -29,10 +90,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		213CA4F72E937BA90040538B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				213CA4F82E937BA90040538B /* WidgetKit.framework */,
+				213CA4FA2E937BA90040538B /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		21E1C7D72DF92B8D00DFB6D7 = {
 			isa = PBXGroup;
 			children = (
+				213CA5122E937BED0040538B /* FurcastWidgetExtension.entitlements */,
 				21E1C7E22DF92B8D00DFB6D7 /* FurcastSwift */,
+				213CA4FC2E937BA90040538B /* FurcastWidget */,
+				213CA4F72E937BA90040538B /* Frameworks */,
 				21E1C7E12DF92B8D00DFB6D7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				21E1C7E02DF92B8D00DFB6D7 /* FurcastSwift.app */,
+				213CA4F62E937BA90040538B /* FurcastWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +122,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		213CA4F52E937BA90040538B /* FurcastWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 213CA50E2E937BAB0040538B /* Build configuration list for PBXNativeTarget "FurcastWidgetExtension" */;
+			buildPhases = (
+				213CA4F22E937BA90040538B /* Sources */,
+				213CA4F32E937BA90040538B /* Frameworks */,
+				213CA4F42E937BA90040538B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				213CA4FC2E937BA90040538B /* FurcastWidget */,
+			);
+			name = FurcastWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = FurcastWidgetExtension;
+			productReference = 213CA4F62E937BA90040538B /* FurcastWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		21E1C7DF2DF92B8D00DFB6D7 /* FurcastSwift */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 21E1C7F32DF92B8F00DFB6D7 /* Build configuration list for PBXNativeTarget "FurcastSwift" */;
@@ -55,10 +151,12 @@
 				21E1C7DC2DF92B8D00DFB6D7 /* Sources */,
 				21E1C7DD2DF92B8D00DFB6D7 /* Frameworks */,
 				21E1C7DE2DF92B8D00DFB6D7 /* Resources */,
+				213CA5112E937BAB0040538B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				213CA50B2E937BAB0040538B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				21E1C7E22DF92B8D00DFB6D7 /* FurcastSwift */,
@@ -80,6 +178,9 @@
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
+					213CA4F52E937BA90040538B = {
+						CreatedOnToolsVersion = 16.1;
+					};
 					21E1C7DF2DF92B8D00DFB6D7 = {
 						CreatedOnToolsVersion = 16.1;
 					};
@@ -94,17 +195,28 @@
 			);
 			mainGroup = 21E1C7D72DF92B8D00DFB6D7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				213CA51D2E9382A90040538B /* XCRemoteSwiftPackageReference "OpenAI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 21E1C7E12DF92B8D00DFB6D7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				21E1C7DF2DF92B8D00DFB6D7 /* FurcastSwift */,
+				213CA4F52E937BA90040538B /* FurcastWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		213CA4F42E937BA90040538B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		21E1C7DE2DF92B8D00DFB6D7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +227,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		213CA4F22E937BA90040538B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		21E1C7DC2DF92B8D00DFB6D7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +243,71 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		213CA50B2E937BAB0040538B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 213CA4F52E937BA90040538B /* FurcastWidgetExtension */;
+			targetProxy = 213CA50A2E937BAB0040538B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		213CA50F2E937BAB0040538B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = FurcastWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 26KNUNHP5D;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FurcastWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FurcastWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MayansParty.FurcastSwift.FurcastWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		213CA5102E937BAB0040538B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = FurcastWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 26KNUNHP5D;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FurcastWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FurcastWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MayansParty.FurcastSwift.FurcastWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		21E1C7F12DF92B8F00DFB6D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -256,6 +439,7 @@
 				DEVELOPMENT_TEAM = 26KNUNHP5D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Furcaste;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To show weather for your current location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -287,6 +471,7 @@
 				DEVELOPMENT_TEAM = 26KNUNHP5D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Furcaste;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To show weather for your current location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -309,6 +494,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		213CA50E2E937BAB0040538B /* Build configuration list for PBXNativeTarget "FurcastWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				213CA50F2E937BAB0040538B /* Debug */,
+				213CA5102E937BAB0040538B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		21E1C7DB2DF92B8D00DFB6D7 /* Build configuration list for PBXProject "FurcastSwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -328,6 +522,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		213CA51D2E9382A90040538B /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 21E1C7D82DF92B8D00DFB6D7 /* Project object */;
 }

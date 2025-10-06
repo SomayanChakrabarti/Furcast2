@@ -59,13 +59,22 @@ class WeatherService: ObservableObject {
         // Get location name using reverse geocoding
         let locationName = try await getLocationName(for: location)
 
+        // Generate funny AI description
+        let aiDescription = await WeatherDescriptionGenerator.shared.generateDescription(
+            location: locationName,
+            temperature: currentTemp,
+            condition: condition,
+            highTemp: highTemp,
+            lowTemp: lowTemp
+        )
+
         let weatherData = WeatherData(
             location: locationName,
             currentTemp: currentTemp,
             condition: condition,
             highTemp: highTemp,
             lowTemp: lowTemp,
-            description: generateDescription(from: weather),
+            description: aiDescription,
             hourlyForecast: Array(hourlyForecast),
             dailyForecast: Array(dailyForecast)
         )
