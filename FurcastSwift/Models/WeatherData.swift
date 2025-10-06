@@ -1,30 +1,56 @@
 import Foundation
+import SwiftUI
 
 // MARK: - Weather Data Models
 struct WeatherData {
     let location: String
-    let currentTemp: Int
+    let currentTemp: Int // Stored in Celsius
     let condition: String
-    let highTemp: Int
-    let lowTemp: Int
+    let highTemp: Int // Stored in Celsius
+    let lowTemp: Int // Stored in Celsius
     let description: String
     let hourlyForecast: [HourlyWeather]
     let dailyForecast: [DailyWeather]
+
+    // Helper methods to get converted temperatures
+    func getCurrentTemp(in unit: TemperatureUnit) -> Int {
+        unit.convert(fromCelsius: currentTemp)
+    }
+
+    func getHighTemp(in unit: TemperatureUnit) -> Int {
+        unit.convert(fromCelsius: highTemp)
+    }
+
+    func getLowTemp(in unit: TemperatureUnit) -> Int {
+        unit.convert(fromCelsius: lowTemp)
+    }
 }
 
 struct HourlyWeather {
     let time: String
-    let temperature: Int
+    let temperature: Int // Stored in Celsius
     let condition: WeatherCondition
     let precipitationChance: Int?
+
+    func getTemperature(in unit: TemperatureUnit) -> Int {
+        unit.convert(fromCelsius: temperature)
+    }
 }
 
 struct DailyWeather {
     let day: String
     let condition: WeatherCondition
-    let lowTemp: Int
-    let highTemp: Int
+    let lowTemp: Int // Stored in Celsius
+    let highTemp: Int // Stored in Celsius
     let precipitationChance: Int?
+
+    func getLowTemp(in unit: TemperatureUnit) -> Int {
+        unit.convert(fromCelsius: lowTemp)
+    }
+
+    func getHighTemp(in unit: TemperatureUnit) -> Int {
+        unit.convert(fromCelsius: highTemp)
+    }
 }
 
 enum WeatherCondition {
@@ -32,7 +58,7 @@ enum WeatherCondition {
     case cloudy
     case rainy
     case partlyCloudy
-    
+
     var systemImage: String {
         switch self {
         case .sunny:

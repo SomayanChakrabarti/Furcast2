@@ -31,21 +31,22 @@ struct DailyForecastView: View {
 struct DailyItemView: View {
     let daily: DailyWeather
     let textColor: Color
-    
+    @ObservedObject var temperatureSettings = TemperatureSettings.shared
+
     var body: some View {
         HStack(spacing: 16) {
             Text(daily.day)
                 .font(.title3)
                 .foregroundColor(textColor)
                 .frame(width: 64, alignment: .leading)
-            
+
             Spacer()
-            
+
             HStack(spacing: 4) {
                 Image(systemName: daily.condition.systemImage)
                     .font(.title2)
-                    .foregroundColor(textColor)
-                
+                    .symbolRenderingMode(.multicolor)
+
                 if let precipChance = daily.precipitationChance {
                     Text("\(precipChance)%")
                         .font(.caption2)
@@ -57,17 +58,17 @@ struct DailyItemView: View {
                         .frame(width: 30)
                 }
             }
-            
+
             Spacer()
-            
+
             HStack(spacing: 8) {
-                Text("L: \(daily.lowTemp)°")
+                Text("L: \(daily.getLowTemp(in: temperatureSettings.unit))°")
                     .font(.title3)
                     .fontWeight(.medium)
                     .foregroundColor(textColor)
                     .frame(width: 64, alignment: .leading)
-                
-                Text("H: \(daily.highTemp)°")
+
+                Text("H: \(daily.getHighTemp(in: temperatureSettings.unit))°")
                     .font(.title3)
                     .fontWeight(.medium)
                     .foregroundColor(textColor)

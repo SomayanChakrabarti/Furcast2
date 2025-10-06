@@ -1,21 +1,16 @@
 import SwiftUI
+import CoreLocation
 
 // MARK: - City Page View (Swipeable Container)
 struct CityPageView: View {
     @State private var cities = City.sampleCities
     @State private var selectedCityIndex = 0
-    
-    // Create WeatherView instances to access their background colors
-    private var weatherViews: [WeatherView] {
-        cities.map { WeatherView(city: $0) }
-    }
+    @ObservedObject private var locationManager = LocationManager.shared
     
     private var currentBackgroundColor: Color {
-        guard selectedCityIndex < weatherViews.count else { return .clear }
-        return weatherViews[selectedCityIndex].gifBackgroundColor
-        
-//        let colors = [Color.red, Color.blue, Color.green, Color.yellow]
-//        return colors[selectedCityIndex]
+        guard selectedCityIndex < cities.count else { return .clear }
+        let gifName = cities[selectedCityIndex].gifName ?? "toiletpaperdance"
+        return GIFView.extractBackgroundColor(from: gifName)
     }
     
     var body: some View {
@@ -35,7 +30,43 @@ struct CityPageView: View {
                 numberOfPages: cities.count,
                 currentPage: selectedCityIndex
             )
-            .padding(.bottom)
+            .padding(.bottom, 0)
+        }
+        .onAppear {
+            locationManager.requestPermission()
+            preloadWeatherForAllCities()
+        }
+        .onChange(of: locationManager.currentLocation) { oldValue, newLocation in
+            if let location = newLocation {
+                updateCurrentLocationCity(with: location)
+            }
+        }
+    }
+
+    private func updateCurrentLocationCity(with location: CLLocation) {
+        // Update the first city with actual location coordinates
+        cities[0] = City(
+            name: "Current Location",
+            latitude: location.coordinate.latitude,
+            longitude: location.coordinate.longitude,
+            gifName: cities[0].gifName
+        )
+    }
+
+    private func preloadWeatherForAllCities() {
+        // Preload weather data for all cities in the background
+        for city in cities {
+            Task {
+                do {
+                    _ = try await WeatherService.shared.fetchWeather(
+                        for: city.latitude,
+                        longitude: city.longitude
+                    )
+                } catch {
+                    // Silently fail - individual views will handle errors
+                    print("Failed to preload weather for \(city.name)")
+                }
+            }
         }
     }
 }

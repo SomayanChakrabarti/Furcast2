@@ -42,22 +42,23 @@ struct HourlyForecastView: View {
 struct HourlyItemView: View {
     let hourly: HourlyWeather
     let textColor: Color
-    
+    @ObservedObject var temperatureSettings = TemperatureSettings.shared
+
     var body: some View {
         VStack {
             Text(hourly.time)
                 .font(.caption)
                 .foregroundColor(textColor)
                 .fontWeight(.medium)
-            
+
             Spacer(minLength: 4)
-            
+
             if let precipChance = hourly.precipitationChance {
                 VStack(spacing: 2) {
                     Image(systemName: hourly.condition.systemImage)
                         .font(.title2)
-                        .foregroundColor(textColor)
-                    
+                        .symbolRenderingMode(.multicolor)
+
                     Text("\(precipChance)%")
                         .font(.caption2)
                         .foregroundColor(.cyan)
@@ -66,12 +67,12 @@ struct HourlyItemView: View {
             } else {
                 Image(systemName: hourly.condition.systemImage)
                     .font(.title2)
-                    .foregroundColor(textColor)
+                    .symbolRenderingMode(.multicolor)
             }
-            
+
             Spacer(minLength: 4)
-            
-            Text("\(hourly.temperature)°")
+
+            Text("\(hourly.getTemperature(in: temperatureSettings.unit))°")
                 .font(.title3)
                 .fontWeight(.medium)
                 .foregroundColor(textColor)
