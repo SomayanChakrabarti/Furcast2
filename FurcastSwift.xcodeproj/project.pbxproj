@@ -10,6 +10,7 @@
 		213CA4F92E937BA90040538B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CA4F82E937BA90040538B /* WidgetKit.framework */; };
 		213CA4FB2E937BA90040538B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 213CA4FA2E937BA90040538B /* SwiftUI.framework */; };
 		213CA50C2E937BAB0040538B /* FurcastWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 213CA4F62E937BA90040538B /* FurcastWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		213CA51F2E9384760040538B /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 213CA51E2E9384760040538B /* OpenAI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				213CA51F2E9384760040538B /* OpenAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +165,7 @@
 			);
 			name = FurcastSwift;
 			packageProductDependencies = (
+				213CA51E2E9384760040538B /* OpenAI */,
 			);
 			productName = FurcastSwift;
 			productReference = 21E1C7E02DF92B8D00DFB6D7 /* FurcastSwift.app */;
@@ -533,6 +536,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		213CA51E2E9384760040538B /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 213CA51D2E9382A90040538B /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 21E1C7D82DF92B8D00DFB6D7 /* Project object */;
 }
