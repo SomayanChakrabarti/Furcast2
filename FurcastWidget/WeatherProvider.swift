@@ -30,20 +30,40 @@ struct WeatherProvider: TimelineProvider {
         Task {
             let entry = await fetchWeatherEntry()
 
-            // Update every 30 minutes
-            let nextUpdate = Calendar.current.date(byAdding: .minute, value: 30, to: Date())!
+            // Update every 15 minutes
+            let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: Date())!
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
             completion(timeline)
         }
     }
 
-    private func fetchWeatherEntry() async -> WeatherWidgetEntry {
-        let isCelsius = defaults?.bool(forKey: "isCelsius") ?? true
+    private func fetchCurrentLocation() async -> CLLocation {
+        if #available(iOS 17, *) {
+            do {
+                for try await update in CLLocationUpdate.liveUpdates() {
+                    if let location = update.location {
+                        defaults?.set(location.coordinate.latitude, forKey: "currentLocationLat")
+                        defaults?.set(location.coordinate.longitude, forKey: "currentLocationLon")
+                        return location
+                    }
+                    if update.authorizationDenied || update.authorizationRestricted {
+                        break
+                    }
+                }
+            } catch {
+                print("Widget location error: \(error)")
+            }
+        }
 
-        // Get user's current location from shared defaults
+        // Fall back to last known location from shared defaults
         let latitude = defaults?.double(forKey: "currentLocationLat") ?? 42.3601
         let longitude = defaults?.double(forKey: "currentLocationLon") ?? -71.0589
-        let location = CLLocation(latitude: latitude, longitude: longitude)
+        return CLLocation(latitude: latitude, longitude: longitude)
+    }
+
+    private func fetchWeatherEntry() async -> WeatherWidgetEntry {
+        let isCelsius = defaults?.bool(forKey: "isCelsius") ?? true
+        let location = await fetchCurrentLocation()
 
         do {
             let weather = try await weatherService.weather(for: location)

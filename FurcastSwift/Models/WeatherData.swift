@@ -71,6 +71,7 @@ enum WeatherCondition {
             return "cloud.sun.fill"
         }
     }
+
 }
 
 // MARK: - Sample Data

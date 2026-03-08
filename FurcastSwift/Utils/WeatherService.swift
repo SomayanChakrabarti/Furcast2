@@ -35,8 +35,9 @@ class WeatherService: ObservableObject {
         let highTemp = today.map { Int($0.highTemperature.value) } ?? currentTemp
         let lowTemp = today.map { Int($0.lowTemperature.value) } ?? currentTemp
 
-        // Map hourly forecast (24 hours)
-        let hourlyForecast = weather.hourlyForecast.prefix(24).enumerated().map { index, hour in
+        // Map hourly forecast (24 hours starting from now)
+        let now = Date()
+        let hourlyForecast = weather.hourlyForecast.filter { $0.date >= now.addingTimeInterval(-3600) }.prefix(24).enumerated().map { index, hour in
             HourlyWeather(
                 time: index == 0 ? "Now" : formatHour(hour.date),
                 temperature: Int(hour.temperature.value),
