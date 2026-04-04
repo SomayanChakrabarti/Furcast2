@@ -1,5 +1,12 @@
 import WidgetKit
 
+struct WidgetHourlyItem {
+    let time: String        // e.g. "6PM", "Now"
+    let temperature: Int    // Celsius
+    let symbolName: String  // SF Symbol name
+    let precipChance: Int?
+}
+
 struct WeatherWidgetEntry: TimelineEntry {
     let date: Date
     let cityName: String
@@ -9,6 +16,8 @@ struct WeatherWidgetEntry: TimelineEntry {
     let condition: String
     let weatherIcon: String
     let isCelsius: Bool
+    let hourlyForecast: [WidgetHourlyItem]
+    let showingHourly: Bool
 
     var displayCurrentTemp: Int {
         isCelsius ? currentTemp : Int(round(Double(currentTemp) * 9.0 / 5.0 + 32.0))
@@ -24,5 +33,15 @@ struct WeatherWidgetEntry: TimelineEntry {
 
     var tempUnit: String {
         isCelsius ? "°C" : "°F"
+    }
+
+    var timeAgoString: String {
+        let minutes = Int(Date().timeIntervalSince(date) / 60)
+        if minutes < 1 { return "Just now" }
+        return "\(minutes)min ago"
+    }
+
+    func displayHourlyTemp(_ item: WidgetHourlyItem) -> Int {
+        isCelsius ? item.temperature : Int(Double(item.temperature) * 9/5 + 32)
     }
 }

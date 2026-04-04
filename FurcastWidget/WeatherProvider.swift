@@ -15,7 +15,9 @@ struct WeatherProvider: TimelineProvider {
             lowTemp: 15,
             condition: "Clear",
             weatherIcon: "sun.max.fill",
-            isCelsius: true
+            isCelsius: true,
+            hourlyForecast: [],
+            showingHourly: false
         )
     }
 
@@ -63,6 +65,7 @@ struct WeatherProvider: TimelineProvider {
 
     private func fetchWeatherEntry() async -> WeatherWidgetEntry {
         let isCelsius = defaults?.bool(forKey: "isCelsius") ?? true
+        let showingHourly = defaults?.bool(forKey: "showingHourly") ?? false
         let location = await fetchCurrentLocation()
 
         do {
@@ -78,6 +81,21 @@ struct WeatherProvider: TimelineProvider {
             // Get city name
             let cityName = try? await getLocationName(for: location)
 
+            // Map hourly forecast: filter to current hour onwards, take first 6
+            let now = Date()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "ha"
+            let upcomingHours = weather.hourlyForecast.filter { $0.date >= now.addingTimeInterval(-3600) }
+            let hourlyItems: [WidgetHourlyItem] = upcomingHours.prefix(6).enumerated().map { index, hour in
+                let timeStr = index == 0 ? "Now" : formatter.string(from: hour.date)
+                return WidgetHourlyItem(
+                    time: timeStr,
+                    temperature: Int(hour.temperature.converted(to: .celsius).value),
+                    symbolName: mapWeatherIcon(hour.condition, isDaylight: hour.isDaylight),
+                    precipChance: hour.precipitationChance > 0 ? Int(hour.precipitationChance * 100) : nil
+                )
+            }
+
             return WeatherWidgetEntry(
                 date: Date(),
                 cityName: cityName ?? "Current Location",
@@ -86,7 +104,9 @@ struct WeatherProvider: TimelineProvider {
                 lowTemp: lowTemp,
                 condition: condition,
                 weatherIcon: icon,
-                isCelsius: isCelsius
+                isCelsius: isCelsius,
+                hourlyForecast: hourlyItems,
+                showingHourly: showingHourly
             )
         } catch {
             print("Widget weather fetch error: \(error)")
@@ -98,7 +118,9 @@ struct WeatherProvider: TimelineProvider {
                 lowTemp: 15,
                 condition: "Clear",
                 weatherIcon: "sun.max.fill",
-                isCelsius: isCelsius
+                isCelsius: isCelsius,
+                hourlyForecast: [],
+                showingHourly: showingHourly
             )
         }
     }
@@ -107,8 +129,10 @@ struct WeatherProvider: TimelineProvider {
         switch condition {
         case .clear, .mostlyClear:
             return "Clear"
-        case .cloudy, .mostlyCloudy, .partlyCloudy:
+        case .cloudy, .mostlyCloudy:
             return "Cloudy"
+        case .partlyCloudy:
+            return "Partly Cloudy"
         case .rain, .drizzle, .heavyRain:
             return "Rain"
         case .snow, .sleet, .flurries, .heavySnow:
@@ -120,14 +144,14 @@ struct WeatherProvider: TimelineProvider {
         }
     }
 
-    private func mapWeatherIcon(_ condition: WeatherKit.WeatherCondition) -> String {
+    private func mapWeatherIcon(_ condition: WeatherKit.WeatherCondition, isDaylight: Bool = true) -> String {
         switch condition {
         case .clear, .mostlyClear:
-            return "sun.max.fill"
+            return isDaylight ? "sun.max.fill" : "moon.stars.fill"
         case .cloudy, .mostlyCloudy:
             return "cloud.fill"
         case .partlyCloudy:
-            return "cloud.sun.fill"
+            return isDaylight ? "cloud.sun.fill" : "cloud.moon.fill"
         case .rain, .drizzle, .heavyRain:
             return "cloud.rain.fill"
         default:
