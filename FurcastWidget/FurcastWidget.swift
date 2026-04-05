@@ -106,20 +106,13 @@ struct WeatherWidgetEntryView: View {
 
             Spacer(minLength: 0)
 
-            // Bottom: staleness | unit toggle | view toggle
-            HStack {
-                Text(entry.timeAgoString)
-                    .font(.subheadline)
-                    .italic()
-                    .foregroundColor(.white.opacity(0.55))
-
-                Spacer()
-
+            // Bottom: unit toggle | view toggle
+            HStack(spacing: 8) {
                 Button(intent: ToggleTemperatureIntent()) {
                     Text(entry.isCelsius ? "°F" : "°C")
                         .font(.subheadline.weight(.semibold))
                         .foregroundColor(.white)
-                        .frame(width: 64)
+                        .frame(maxWidth: .infinity)
                         .padding(.vertical, 6)
                         .background(Capsule().fill(Color.white.opacity(0.25)))
                 }
@@ -136,7 +129,7 @@ struct WeatherWidgetEntryView: View {
                         }
                     }
                     .foregroundColor(.white.opacity(0.8))
-                    .frame(width: 64)
+                    .frame(maxWidth: .infinity)
                     .padding(.vertical, 6)
                     .background(Capsule().fill(Color.white.opacity(0.15)))
                 }
