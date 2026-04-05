@@ -43,10 +43,10 @@ struct WeatherView: View {
                                 .contentShape(Rectangle())
                         }
 
-                        HourlyForecastView(hourlyData: weather.hourlyForecast, textColor: textColor, description: weather.description)
+                        HourlyForecastView(hourlyData: weather.hourlyForecast, textColor: textColor)
 
                         DailyForecastView(dailyData: weather.dailyForecast, textColor: textColor)
-                            .padding(.bottom, 30)
+                            .padding(.bottom, 100)
                     } else {
                         // Loading state
                         ProgressView("Loading weather for \(city.name)...")
@@ -57,6 +57,7 @@ struct WeatherView: View {
                 .contentShape(Rectangle())
             }
             .contentShape(Rectangle())
+            .ignoresSafeArea(edges: .bottom)
         }
         .contentShape(Rectangle())
         .simultaneousGesture(
@@ -88,9 +89,9 @@ struct WeatherView: View {
                     condition: "Rain",
                     highTemp: 19,
                     lowTemp: 11,
-                    description: "Sample data - WeatherKit setup required. Wind gusts up to 15 mph.",
                     hourlyForecast: WeatherData.sampleData.hourlyForecast,
-                    dailyForecast: WeatherData.sampleData.dailyForecast
+                    dailyForecast: WeatherData.sampleData.dailyForecast,
+                    feelsLike: nil
                 )
             }
         }

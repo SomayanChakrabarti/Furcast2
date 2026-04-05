@@ -4,23 +4,9 @@ import SwiftUI
 struct HourlyForecastView: View {
     let hourlyData: [HourlyWeather]
     let textColor: Color
-    let description: String
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(description)
-                .font(.callout)
-                .foregroundColor(textColor.opacity(0.8))
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity)
-                .padding(.top, 12)
-                .padding(.horizontal, 12)
-            
-            Divider()
-                .background(textColor.opacity(0.5))
-                .frame(height: 1)
-                .padding(.horizontal, 12)
-
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     ForEach(Array(hourlyData.enumerated()), id: \.offset) { index, hour in
@@ -28,7 +14,7 @@ struct HourlyForecastView: View {
                     }
                 }
                 .padding(.leading, 12)
-                .padding(.bottom, 16)
+                .padding(.vertical, 16)
             }
         }
         .background(
@@ -85,8 +71,7 @@ struct HourlyItemView: View {
 #Preview {
     HourlyForecastView(
         hourlyData: WeatherData.sampleData.hourlyForecast,
-        textColor: .white,
-        description: WeatherData.sampleData.description
+        textColor: .white
     )
     .background(Color.blue)
 } 

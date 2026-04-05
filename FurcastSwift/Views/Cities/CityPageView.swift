@@ -14,23 +14,19 @@ struct CityPageView: View {
     }
     
     var body: some View {
-        TabView(selection: $selectedCityIndex) {
-            ForEach(Array(cities.enumerated()), id: \.element.id) { index, city in
-                WeatherView(city: city)
-                    .tag(index)
+        ZStack(alignment: .bottom) {
+            TabView(selection: $selectedCityIndex) {
+                ForEach(Array(cities.enumerated()), id: \.element.id) { index, city in
+                    WeatherView(city: city)
+                        .tag(index)
+                }
             }
-        }
-        .background(currentBackgroundColor)
-        .animation(.easeInOut(duration: 0.3), value: currentBackgroundColor)
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-        .ignoresSafeArea()
-        .overlay(alignment: .bottom) {
-            // Custom page indicator
-            PageIndicator(
-                numberOfPages: cities.count,
-                currentPage: selectedCityIndex
-            )
-            .padding(.bottom, 0)
+            .background(currentBackgroundColor)
+            .animation(.easeInOut(duration: 0.3), value: currentBackgroundColor)
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .ignoresSafeArea()
+
+            CityPageIndicator(numberOfPages: cities.count, currentPage: $selectedCityIndex)
         }
         .onAppear {
             initializeCitiesWithRandomGIFs()
@@ -85,34 +81,63 @@ struct CityPageView: View {
     }
 }
 
-// MARK: - Custom Page Indicator
-struct PageIndicator: View {
+
+// MARK: - Liquid Glass Page Indicator
+struct CityPageIndicator: View {
     let numberOfPages: Int
-    let currentPage: Int
-    
+    @Binding var currentPage: Int
+
     var body: some View {
         HStack(spacing: 8) {
             ForEach(0..<numberOfPages, id: \.self) { index in
-                Circle()
-                    .fill(index == currentPage ? Color.white : Color.white.opacity(0.3))
-                    .frame(width: 8, height: 8)
-                    .scaleEffect(index == currentPage ? 1.2 : 1.0)
-                    .animation(.easeInOut(duration: 0.2), value: currentPage)
+                if index == 0 {
+                    Image(systemName: "location.fill")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(index == currentPage ? .white : .white.opacity(0.4))
+                } else {
+                    Circle()
+                        .fill(index == currentPage ? Color.white : Color.white.opacity(0.4))
+                        .frame(width: 7, height: 7)
+                }
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
-        .background(
-            Capsule()
-                .fill(Color.black.opacity(0.2))
+        .padding(.horizontal, 20)
+        .padding(.vertical, 12)
+        .liquidGlass(in: Capsule())
+        .overlay(
+            GeometryReader { geo in
+                Color.clear
+                    .contentShape(Rectangle())
+                    .gesture(
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { value in
+                                let x = value.location.x - 20
+                                let slotWidth = (geo.size.width - 40) / CGFloat(numberOfPages)
+                                let index = Int(x / slotWidth)
+                                let clamped = max(0, min(numberOfPages - 1, index))
+                                if clamped != currentPage {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    var transaction = Transaction()
+                                    transaction.disablesAnimations = true
+                                    withTransaction(transaction) {
+                                        currentPage = clamped
+                                    }
+                                }
+                            }
+                    )
+            }
         )
     }
 }
 
-// MARK: - Background Blur Extension
-extension View {
-    func backdrop() -> some View {
-        self.background(.ultraThinMaterial.opacity(0.3))
+private extension View {
+    @ViewBuilder
+    func liquidGlass(in shape: some Shape) -> some View {
+        if #available(iOS 26, *) {
+            self.glassEffect(.regular.interactive(), in: shape)
+        } else {
+            self.background(shape.fill(.ultraThinMaterial))
+        }
     }
 }
 

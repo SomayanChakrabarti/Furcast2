@@ -8,9 +8,9 @@ struct WeatherData {
     let condition: String
     let highTemp: Int // Stored in Celsius
     let lowTemp: Int // Stored in Celsius
-    let description: String
     let hourlyForecast: [HourlyWeather]
     let dailyForecast: [DailyWeather]
+    let feelsLike: Int? // Stored in Celsius, nil if unavailable
 
     // Helper methods to get converted temperatures
     func getCurrentTemp(in unit: TemperatureUnit) -> Int {
@@ -23,6 +23,10 @@ struct WeatherData {
 
     func getLowTemp(in unit: TemperatureUnit) -> Int {
         unit.convert(fromCelsius: lowTemp)
+    }
+
+    func getFeelsLikeTemp(in unit: TemperatureUnit) -> Int? {
+        feelsLike.map { unit.convert(fromCelsius: $0) }
     }
 }
 
@@ -82,8 +86,8 @@ extension WeatherData {
         condition: "Rain",
         highTemp: 19,
         lowTemp: 11,
-        description: "Cloudy conditions expected around 8AM. Wind gusts are up to 15 mph.",
         hourlyForecast: [
+
             HourlyWeather(time: "Now", temperature: 12, condition: .rainy, precipitationChance: nil),
             HourlyWeather(time: "6AM", temperature: 12, condition: .rainy, precipitationChance: 35),
             HourlyWeather(time: "7AM", temperature: 13, condition: .rainy, precipitationChance: 30),
@@ -96,6 +100,7 @@ extension WeatherData {
             DailyWeather(day: "Thu", condition: .sunny, lowTemp: 8, highTemp: 19, precipitationChance: nil),
             DailyWeather(day: "Fri", condition: .cloudy, lowTemp: 8, highTemp: 20, precipitationChance: nil),
             DailyWeather(day: "Sat", condition: .sunny, lowTemp: 10, highTemp: 23, precipitationChance: nil)
-        ]
+        ],
+        feelsLike: nil
     )
 } 
