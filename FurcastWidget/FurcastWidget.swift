@@ -99,8 +99,6 @@ struct WeatherWidgetEntryView: View {
                         .symbolRenderingMode(.multicolor)
                 }
 
-                Spacer(minLength: 0).frame(maxHeight: 4)
-
                 CurrentWeatherView(entry: entry)
             }
 
